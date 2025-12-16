@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Búsqueda de Pacientes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="card large">
+  <h1>🔍 Búsqueda de Pacientes</h1>
+
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Buscar paciente por nombre..."
+    autocomplete="off"
+  />
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="results"></tbody>
+  </table>
+</div>
+
+<script>
+  const input = document.getElementById('searchInput');
+  const results = document.getElementById('results');
+
+  input.addEventListener('input', async () => {
+    const query = input.value.trim();
+
+    if (query.length < 2) {
+      results.innerHTML = '';
+      return;
+    }
+
+    const res = await fetch(`/api/pacientes/buscar?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+
+    results.innerHTML = '';
+
+    data.forEach(p => {
+      results.innerHTML += `
+        <tr>
+          <td>${p.nombre_completo}</td>
+          <td>${p.no_telefono || ''}</td>
+          <td class="actions">
+            <a class="btn edit" href="/pacientes/editar/${p.id}">Editar</a>
+          </td>
+        </tr>
+      `;
+    });
+  });
+
+</script>
+
+</body>
+</html>

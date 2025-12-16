@@ -1,0 +1,22 @@
+{
+  "name": "proyecto-final-tbd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2",
+    "mysql2": "^3.15.3",
+    "nodemon": "^3.1.11",
+    "xlsx": "^0.18.5"
+  }
+}

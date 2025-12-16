@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Gestor de Expedientes Clínicos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div id="navbar"></div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="container">
+
+    <h1>Sistema Gestor de Expedientes Clínicos</h1>
+    <p class="center">
+      Plataforma para la administración de expedientes clínicos de los alumnos de la PCUM.
+    </p>
+
+    <!-- CONTENIDO MÉDICO -->
+    <div id="medico-content" style="display:none;">
+
+      <!-- REGISTRO -->
+      <div class="card">
+        <h2>Registro de Pacientes</h2>
+
+        <form action="/submit-data" method="POST">
+
+          <label>Nombre del paciente</label>
+          <input type="text" name="name" required>
+
+          <label>Fecha de nacimiento</label>
+          <input type="date" name="birth_date" required>
+
+          <label>Número de teléfono</label>
+          <input type="text" name="phone_number">
+
+          <label>Enfermedades previas</label>
+          <input type="text" name="previous_diseases">
+
+          <label>Antecedentes familiares</label>
+          <input type="text" name="family_history">
+
+          <label>Medicamento prescrito</label>
+          <input type="text" name="prescription_medication">
+
+          <label>Peso (kg)</label>
+          <input type="number" name="weight" step="0.1" placeholder="Ej. 72.5">
+
+          <label>Talla (m)</label>
+          <input type="number" name="size" step="0.01" placeholder="Ej. 1.65">
+
+          <label>IMC</label>
+          <input type="number" name="imc" step="0.01" placeholder="Ej. 23.45">
+
+          <label>Contacto de emergencia</label>
+          <input type="text" name="emergency_contact">
+
+          <button type="submit">Guardar paciente</button>
+        </form>
+      </div>
+
+      <!-- OPCIONES -->
+      <div class="card center">
+        <h2>Pacientes</h2>
+        <button onclick="window.location.href='/pacientes'">Ver pacientes</button>
+        <button onclick="window.location.href='/pacientes-ordenados'" class="secondary">Pacientes en orden alfabético</button>
+      </div>
+
+      
+      <!-- IMPORTAR EXCEL -->
+      <div class="card center">
+        <h2>Importar pacientes desde Excel</h2>
+        <form action="/importar-pacientes" method="POST" enctype="multipart/form-data">
+          <input type="file" name="archivo" accept=".xlsx,.xls" required>
+          <button type="submit">Importar</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- CONTENIDO ADMIN -->
+    <div id="admin-content" style="display:none;">
+      
+    </div>
+
+  </div>
+
+  <!-- SCRIPT ROLES -->
+  <script>
+  fetch('/navbar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('navbar').innerHTML = html;
+      return fetch('/tipo-usuario');
+    })
+    .then(r => r.json())
+    .then(data => {
+      const menu = document.getElementById('menu');
+      const medicoContent = document.getElementById('medico-content');
+      const adminContent  = document.getElementById('admin-content');
+
+      if (!menu) return;
+
+      if (data.tipo_usuario === 'admin') {
+        medicoContent.style.display = 'block';
+        adminContent.style.display = 'block';
+
+        menu.innerHTML += '<li><a href="/pacientes">Ver Pacientes</a></li>';
+        menu.innerHTML += '<li><a href="/ver-usuarios">Ver Usuarios</a></li>';
+        menu.innerHTML += '<li><a href="/usuarios/nuevo">Crear Usuario</a></li>';
+        menu.innerHTML += '<li><a href="/busqueda.html">Búsqueda de Pacientes</a></li>';
+      }
+
+      if (data.tipo_usuario === 'medico') {
+        medicoContent.style.display = 'block';
+
+        menu.innerHTML += '<li><a href="/pacientes">Ver Pacientes</a></li>';
+        menu.innerHTML += '<li><a href="/busqueda.html">Búsqueda de Pacientes</a></li>';
+      }
+
+      menu.innerHTML += '<li><a href="/logout">Cerrar sesión</a></li>';
+    })
+    .catch(error => {
+      console.error('Error al cargar menú:', error);
+      const menu = document.getElementById('menu');
+      if (menu) {
+        menu.innerHTML += '<li><a href="/login.html">Iniciar sesión</a></li>';
+      }
+    });
+</script>
+
+
+</body>
+</html>

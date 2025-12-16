@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <ul id="menu"></ul>
+</nav>
+
+<script>
+  window.onload = () => {
+    fetch('/menu')
+      .then(res => res.json())
+      .then(data => {
+        const menu = document.getElementById('menu');
+        data.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${item.url}">${item.nombre}</a>`;
+          menu.appendChild(li);
+        });
+      });
+  };
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="card">
+  <h1>Iniciar Sesión</h1>
+
+  <form action="/login" method="POST">
+    <label>Usuario:</label>
+    <input type="text" name="nombre_usuario" required>
+
+    <label>Contraseña:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div class="center">
+    <a href="/registro.html" class="link-btn">Crear cuenta</a>
+  </div>
+</div>
+
+</body>
+</html>
