@@ -52,4 +52,37 @@ Incluye control de acceso por roles, manejo de base de datos y carga masiva de i
 ---
 
 ##  Estructura del Proyecto
+Proyecto Final TBD/
+│
+├── public/
+│ ├── index.html
+│ ├── login.html
+│ ├── registro.html
+│ ├── busqueda.html
+│ ├── navbar.html
+│ └── styles.css
+│
+├── uploads/
+│ └── (archivos cargados desde Excel)
+│
+├── server.js
+├── package.json
+├── package-lock.json
+├── nodemon.json
+└── .gitignore
+
+---
+
+##  Instalación y Ejecución
+
+1. Clonar el repositorio:
+git clone https://github.com/l23212212/Sistema-Expedientes-Clinicos.git
+2. Entrar al proyecto:
+cd Sistema-Expedientes-Clinicos
+3. Instalar dependencias:
+npm install
+4. Ejecutar el servidor:
+npm start
+5. Abrir el navegador:
+http://localhost:3000
 
